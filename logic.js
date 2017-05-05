@@ -1,41 +1,46 @@
   $(document).ready(function() {
+      var title;
+      var link;
       $("#getArticles").on("click", function(){  
-         //set search criteria for API call
+         //set search criteria in url for API call
          var search = $("#userInput").val();
          var url ='https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&origin=*&continue=&titles='+ search + '&srsearch='+search;
-         //API call for 10 related wikipedia articles
-         $("#randomLink").attr("style","visiblility:hidden");
-         $("#randomLink").html("");
 
+         //reset results section before new search
+         $("#resultBlock").html("");
+         //API call
          $.getJSON(url, function(json){
-            for (var i=0;i<9;i++){
-               var linkID="#link"+i;
-               var snippetID="#snippet"+i;
-               $(linkID).html(json.query.search[i].title);
-               $(linkID).attr("href","https://en.wikipedia.org/wiki/"+json.query.search[i].title);
-               $(linkID).attr("style","visiblility:visible");
-               $(snippetID).html(json.query.search[i].snippet+" ...");
-            }        
+            //message for no results
+            if(json.error){
+               $("#noResults").attr("style", "visibility:visible");
+               $("#noResults").html(json.error.info);
+            }
+            else{
+            //fill any result blocks with based on search results
+               $("#resultBlock").attr("style","visibility:visible");
+               for (var i=0;i<json.query.search.length;i++){
+                  title=json.query.search[i].title;
+                  link="https://en.wikipedia.org/wiki/"+json.query.search[i].title;
+                  snippet=json.query.search[i].snippet+"...";
+                  $("#resultBlock").append("<div class=\"resultBlock\"><a class=\"title\" href="+link+">"+title+"</a><p>"+snippet+"</p></div>");
+               } 
+            }
+            }); 
          });
-      });
+         
       $("#getRandom").on("click", function(){  
-         //hide links to any previously conducted article search
-         for (var i=0;i<9;i++){
-               var linkID="#link"+i;
-               var snippetID="#snippet"+i;
-               $(linkID).html("");
-               $(linkID).attr("href","*");
-               $(linkID).attr("style","visiblility:hidden");
-               $(snippetID).html("");
-            } 
-         var url2 ='https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=&list=random&meta=&continue=&titles=Main+Page';
-         console.log(url2);
+         //set API url for random article
+         var url ='https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=&list=random&meta=&continue=&titles=Main+Page';
+         //reset results section before new search
+         $("#resultBlock").html("");
+         $("#resultBlock").attr("style","visibility:visible")
          //API call for random wikipedia article
-         $.getJSON(url2, function(json){
-               $("#randomLink").html(json.query.random[0].title);
-               $("#randomLink").attr("href","https://en.wikipedia.org/wiki/"+json.query.random[0].title);
-               $("#randomLink").attr("style","visiblility:visible");        
+         $.getJSON(url, function(json){
+               title=json.query.random[0].title;
+               link="https://en.wikipedia.org/wiki/"+json.query.random[0].title;
+               $("#resultBlock").append("<div class=\"resultBlock\"><a class=\"title\" href="+link+">"+title+"</a></div>");
          });
+      
       });
    });
-   
+
