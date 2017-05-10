@@ -9,29 +9,32 @@
 
    <!--jQuery, linked from a CDN-->
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-      
-   <link rel="stylesheet" type="text/css" href="style.css">
-  
+     <!--Add Bootstrap from CDN-->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+   <!-- Add Bootstrap theme from Bootswatch-->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css">
+   <link rel="stylesheet" type="text/css" href="css/style.css">  
+
     
   
 </head>
 <body>
-   <div class="searchSection">
+   <div class="container padBot">
       <h1>Enter Search Criteria</h1>
       <input id="userInput" type="text" value=""></input>
-      <button id="getArticles">Get Articles</button>
-      <button id="getRandom">Get Random Article</button>
+      <button class="btn" id="getArticles">Get Articles</button>
+      <button class="btn" id="getRandom">Get Random Article</button>
    </div>
-   <p id="noResults" style=""></p>
+   <div class="container">
+      <p id="noResults" style=""></p>
+   </div>
    <div class="results">
       <!--this div will be appended with multiple elements depending on search results-->
       <div id="resultBlock" style="visibility:hidden"></div>
    </div>
    
-
-   
    <!--link to javascript file-->
-   <script type="text/javascript" src="logic.js"></script>
+   <script type="text/javascript" src="javascript/logic.js"></script>
 
 </body>
 </html>

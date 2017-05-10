@@ -1,8 +1,8 @@
 * {
     font-family: 'Roboto Slab', serif;
 }
-.searchSection{
-	margin-bottom:25px;
+.padBot{
+	padding-bottom:25px;
 }
 .results{
 	width:80%;
